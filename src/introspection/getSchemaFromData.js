@@ -101,7 +101,7 @@ export default data => {
                     id: { type: new GraphQLNonNull(GraphQLID) },
                 },
             };
-            fields[`all${camelize(pluralize(type.name))}`] = {
+            fields[`all${camelize(pluralize(type.name), false)}`] = {
                 type: new GraphQLList(typesByName[type.name]),
                 args: {
                     page: { type: GraphQLInt },
@@ -111,7 +111,7 @@ export default data => {
                     filter: { type: filterTypesByName[type.name] },
                 },
             };
-            fields[`_all${camelize(pluralize(type.name))}Meta`] = {
+            fields[`_all${camelize(pluralize(type.name), false)}Meta`] = {
                 type: listMetadataType,
                 args: {
                     page: { type: GraphQLInt },
