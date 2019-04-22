@@ -98,7 +98,7 @@ export default data => {
             fields[type.name] = {
                 type: typesByName[type.name],
                 args: {
-                    id: { type: new GraphQLNonNull(GraphQLID) },
+                    id: { type: GraphQLID },
                 },
             };
             fields[`all${camelize(pluralize(type.name), false)}`] = {
