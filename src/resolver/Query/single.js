@@ -1,2 +1,2 @@
 export default (entityData = []) => (_, { id }) =>
-    entityData.find(d => d.id == id);
+    Array.isArray(entityData) ? entityData.find(d => d.id == id) : entityData;
