@@ -27,7 +27,7 @@ const isObject = value =>
 const valuesAreObject = values => values.every(isObject);
 
 const requiredTypeOrNormal = (type, isRequired) =>
-    isRequired ? new GraphQLNonNull(type) : type;
+    true ? new GraphQLNonNull(type) : type;
 
 export default (name, values = [], isRequired = false) => {
     if (name === 'id' || name.substr(name.length - 3) === '_id') {
