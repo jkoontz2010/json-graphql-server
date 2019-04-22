@@ -49,11 +49,8 @@ const reduceEntities = entities =>
 const objectReduce = entity => {
     const values = {};
     Object.keys(entity).forEach(fieldName => {
-        if (!values[fieldName]) {
-            values[fieldName] = [];
-        }
-        if (entity[fieldName] != null) {
-            values[fieldName].push(entity[fieldName]);
+        if (!values[fieldName] && entity[fieldName] != null) {
+            values[fieldName] = entity[fieldName];
         }
     });
 

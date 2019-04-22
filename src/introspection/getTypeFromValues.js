@@ -27,13 +27,13 @@ const isObject = value =>
 const valuesAreObject = values => values.every(isObject);
 
 const requiredTypeOrNormal = (type, isRequired) =>
-    true ? new GraphQLNonNull(type) : type;
+    isRequired ? new GraphQLNonNull(type) : type;
 
 export default (name, values = [], isRequired = false) => {
     if (name === 'id' || name.substr(name.length - 3) === '_id') {
         return requiredTypeOrNormal(GraphQLID, isRequired);
     }
-    if (values.length > 0) {
+    if (Array.isArray(values) && values.length > 0) {
         if (valuesAreArray(values)) {
             const leafValues = values.reduce((agg, arr) => {
                 arr.forEach(value => agg.push(value));

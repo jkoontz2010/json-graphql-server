@@ -57,7 +57,7 @@ test('Integration test', () => {
     const CurrentUserType = new GraphQLObjectType({
         name: 'currentUser',
         fields: {
-            id: { type: GraphQLID },
+            id: { type: new GraphQLNonNull(GraphQLID) },
             name: { type: GraphQLString },
         },
     });
