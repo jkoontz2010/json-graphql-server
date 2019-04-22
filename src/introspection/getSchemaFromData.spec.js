@@ -37,22 +37,22 @@ const data = {
 };
 
 const PostType = new GraphQLObjectType({
-    name: 'Post',
+    name: 'post',
     fields: () => ({
         id: { type: new GraphQLNonNull(GraphQLID) },
         title: { type: new GraphQLNonNull(GraphQLString) },
         views: { type: new GraphQLNonNull(GraphQLInt) },
         user_id: { type: new GraphQLNonNull(GraphQLID) },
-        User: { type: UserType },
+        user: { type: UserType },
     }),
 });
 
 const UserType = new GraphQLObjectType({
-    name: 'User',
+    name: 'user',
     fields: () => ({
         id: { type: new GraphQLNonNull(GraphQLID) },
         name: { type: new GraphQLNonNull(GraphQLString) },
-        Posts: { type: new GraphQLList(PostType) },
+        posts: { type: new GraphQLList(PostType) },
     }),
 });
 
@@ -105,30 +105,30 @@ const QueryType = new GraphQLObjectType({
 
 test('creates one type per data type', () => {
     const typeMap = getSchemaFromData(data).getTypeMap();
-    expect(typeMap['Post'].name).toEqual(PostType.name);
-    expect(Object.keys(typeMap['Post'].getFields())).toEqual(
+    expect(typeMap['post'].name).toEqual(PostType.name);
+    expect(Object.keys(typeMap['post'].getFields())).toEqual(
         Object.keys(PostType.getFields())
     );
-    expect(typeMap['User'].name).toEqual(UserType.name);
-    expect(Object.keys(typeMap['User'].getFields())).toEqual(
+    expect(typeMap['user'].name).toEqual(UserType.name);
+    expect(Object.keys(typeMap['user'].getFields())).toEqual(
         Object.keys(UserType.getFields())
     );
 });
 
 test('creates one field per relationship', () => {
     const typeMap = getSchemaFromData(data).getTypeMap();
-    expect(Object.keys(typeMap['Post'].getFields())).toContain('User');
+    expect(Object.keys(typeMap['post'].getFields())).toContain('user');
 });
 
 test('creates one field per reverse relationship', () => {
     const typeMap = getSchemaFromData(data).getTypeMap();
-    expect(Object.keys(typeMap['User'].getFields())).toContain('Posts');
+    expect(Object.keys(typeMap['user'].getFields())).toContain('posts');
 });
 
 test('creates three query fields per data type', () => {
     const queries = getSchemaFromData(data).getQueryType().getFields();
-    expect(queries['Post'].type.name).toEqual(PostType.name);
-    expect(queries['Post'].args).toEqual([
+    expect(queries['post'].type.name).toEqual(PostType.name);
+    expect(queries['post'].args).toEqual([
         {
             defaultValue: undefined,
             description: null,
@@ -136,7 +136,7 @@ test('creates three query fields per data type', () => {
             type: new GraphQLNonNull(GraphQLID),
         },
     ]);
-    expect(queries['allPosts'].type.toString()).toEqual('[Post]');
+    expect(queries['allPosts'].type.toString()).toEqual('[post]');
     expect(queries['allPosts'].args[0].name).toEqual('page');
     expect(queries['allPosts'].args[0].type).toEqual(GraphQLInt);
     expect(queries['allPosts'].args[1].name).toEqual('perPage');
@@ -146,11 +146,11 @@ test('creates three query fields per data type', () => {
     expect(queries['allPosts'].args[3].name).toEqual('sortOrder');
     expect(queries['allPosts'].args[3].type).toEqual(GraphQLString);
     expect(queries['allPosts'].args[4].name).toEqual('filter');
-    expect(queries['allPosts'].args[4].type.toString()).toEqual('PostFilter');
+    expect(queries['allPosts'].args[4].type.toString()).toEqual('postFilter');
     expect(queries['_allPostsMeta'].type.toString()).toEqual('ListMetadata');
 
-    expect(queries['User'].type.name).toEqual(UserType.name);
-    expect(queries['User'].args).toEqual([
+    expect(queries['user'].type.name).toEqual(UserType.name);
+    expect(queries['user'].args).toEqual([
         {
             defaultValue: undefined,
             description: null,
@@ -158,7 +158,7 @@ test('creates three query fields per data type', () => {
             type: new GraphQLNonNull(GraphQLID),
         },
     ]);
-    expect(queries['allUsers'].type.toString()).toEqual('[User]');
+    expect(queries['allUsers'].type.toString()).toEqual('[user]');
     expect(queries['allUsers'].args[0].name).toEqual('page');
     expect(queries['allUsers'].args[0].type).toEqual(GraphQLInt);
     expect(queries['allUsers'].args[1].name).toEqual('perPage');
@@ -168,7 +168,7 @@ test('creates three query fields per data type', () => {
     expect(queries['allUsers'].args[3].name).toEqual('sortOrder');
     expect(queries['allUsers'].args[3].type).toEqual(GraphQLString);
     expect(queries['allUsers'].args[4].name).toEqual('filter');
-    expect(queries['allUsers'].args[4].type.toString()).toEqual('UserFilter');
+    expect(queries['allUsers'].args[4].type.toString()).toEqual('userFilter');
     expect(queries['_allPostsMeta'].type.toString()).toEqual('ListMetadata');
 });
 
@@ -284,11 +284,11 @@ test('pluralizes and capitalizes correctly', () => {
         categories: [{ id: 1, name: 'foo' }],
     };
     const queries = getSchemaFromData(data).getQueryType().getFields();
-    expect(queries).toHaveProperty('Foot');
-    expect(queries).toHaveProperty('Category');
+    expect(queries).toHaveProperty('foot');
+    expect(queries).toHaveProperty('category');
     expect(queries).toHaveProperty('allFeet');
     expect(queries).toHaveProperty('allCategories');
     const types = getSchemaFromData(data).getTypeMap();
-    expect(types).toHaveProperty('Foot');
-    expect(types).toHaveProperty('Category');
+    expect(types).toHaveProperty('foot');
+    expect(types).toHaveProperty('category');
 });

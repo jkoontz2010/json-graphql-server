@@ -35,7 +35,7 @@ test('Integration test', () => {
         ],
     };
     const PostType = new GraphQLObjectType({
-        name: 'Post',
+        name: 'post',
         fields: {
             id: { type: new GraphQLNonNull(GraphQLID) },
             title: { type: new GraphQLNonNull(GraphQLString) },
@@ -44,7 +44,7 @@ test('Integration test', () => {
         },
     });
     const UsersType = new GraphQLObjectType({
-        name: 'User',
+        name: 'user',
         fields: {
             id: { type: new GraphQLNonNull(GraphQLID) },
             name: { type: new GraphQLNonNull(GraphQLString) },

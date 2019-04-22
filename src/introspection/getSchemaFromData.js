@@ -139,15 +139,15 @@ export default data => {
                 });
                 return f;
             }, {});
-            fields[`create${type.name}`] = {
+            fields[`create${camelize(type.name)}`] = {
                 type: typesByName[type.name],
                 args: typeFields,
             };
-            fields[`update${type.name}`] = {
+            fields[`update${camelize(type.name)}`] = {
                 type: typesByName[type.name],
                 args: nullableTypeFields,
             };
-            fields[`remove${type.name}`] = {
+            fields[`remove${camelize(type.name)}`] = {
                 type: GraphQLBoolean,
                 args: {
                     id: { type: new GraphQLNonNull(GraphQLID) },

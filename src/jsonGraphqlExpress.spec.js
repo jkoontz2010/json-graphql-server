@@ -59,15 +59,15 @@ describe('integration tests', () => {
             },
         }));
     it('gets an entity by id', () =>
-        gqlAgent('{ Post(id: 1) { id } }').expect({
+        gqlAgent('{ post(id: 1) { id } }').expect({
             data: {
-                Post: { id: '1' },
+                post: { id: '1' },
             },
         }));
     it('gets all the entity fields', () =>
-        gqlAgent('{ Post(id: 1) { id title views user_id } }').expect({
+        gqlAgent('{ post(id: 1) { id title views user_id } }').expect({
             data: {
-                Post: {
+                post: {
                     id: '1',
                     title: 'Lorem Ipsum',
                     views: 254,
@@ -76,20 +76,20 @@ describe('integration tests', () => {
             },
         }));
     it('throws an error when asked for a non existent field', () =>
-        gqlAgent('{ Post(id: 1) { foo } }').expect({
+        gqlAgent('{ post(id: 1) { foo } }').expect({
             errors: [
                 {
-                    message: 'Cannot query field "foo" on type "Post".',
+                    message: 'Cannot query field "foo" on type "post".',
                     locations: [{ line: 1, column: 17 }],
                 },
             ],
         }));
     it('gets relationship fields', () =>
-        gqlAgent('{ Post(id: 1) { User { name } Comments { body }} }').expect({
+        gqlAgent('{ post(id: 1) { user { name } comments { body }} }').expect({
             data: {
-                Post: {
-                    User: { name: 'John Doe' },
-                    Comments: [
+                post: {
+                    user: { name: 'John Doe' },
+                    comments: [
                         { body: 'Consectetur adipiscing elit' },
                         { body: 'Nam molestie pellentesque dui' },
                     ],
