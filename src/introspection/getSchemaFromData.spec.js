@@ -133,7 +133,7 @@ test('creates three query fields per data type', () => {
             defaultValue: undefined,
             description: null,
             name: 'id',
-            type: new GraphQLNonNull(GraphQLID),
+            type: GraphQLID,
         },
     ]);
     expect(queries['allPosts'].type.toString()).toEqual('[post]');
@@ -155,7 +155,7 @@ test('creates three query fields per data type', () => {
             defaultValue: undefined,
             description: null,
             name: 'id',
-            type: new GraphQLNonNull(GraphQLID),
+            type: GraphQLID,
         },
     ]);
     expect(queries['allUsers'].type.toString()).toEqual('[user]');
