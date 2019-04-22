@@ -13,6 +13,12 @@ test('returns an array of values for every field', () => {
         foo: ['bar', 'baz'],
     });
 });
+test('returns an array of values for every field in a singular object', () => {
+    expect(getValuesFromEntities({ id: 1, foo: 'bar' })).toEqual({
+        id: [1],
+        foo: ['bar'],
+    });
+});
 test('does not ignore duplicate values', () => {
     expect(getValuesFromEntities([{ foo: 'bar' }, { foo: 'bar' }])).toEqual({
         foo: ['bar', 'bar'],

@@ -6,7 +6,6 @@ import {
     GraphQLNonNull,
 } from 'graphql';
 import getTypesFromData from './getTypesFromData';
-
 test('Integration test', () => {
     const data = {
         posts: [
@@ -33,6 +32,10 @@ test('Integration test', () => {
                 name: 'Jane Doe',
             },
         ],
+        currentUser: {
+            id: 123,
+            name: 'Jay',
+        },
     };
     const PostType = new GraphQLObjectType({
         name: 'post',
@@ -50,5 +53,18 @@ test('Integration test', () => {
             name: { type: new GraphQLNonNull(GraphQLString) },
         },
     });
-    expect(getTypesFromData(data)).toEqual([PostType, UsersType]);
+
+    const CurrentUserType = new GraphQLObjectType({
+        name: 'currentUser',
+        fields: {
+            id: { type: GraphQLID },
+            name: { type: GraphQLString },
+        },
+    });
+
+    expect(getTypesFromData(data)).toEqual([
+        PostType,
+        UsersType,
+        CurrentUserType,
+    ]);
 });

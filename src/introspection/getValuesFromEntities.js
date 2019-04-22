@@ -24,15 +24,40 @@
  * //    user_id: [123, 456],
  * // }
  */
-export default entities =>
-    entities.reduce((values, entity) => {
-        Object.keys(entity).forEach(fieldName => {
-            if (!values[fieldName]) {
-                values[fieldName] = [];
-            }
-            if (entity[fieldName] != null) {
-                values[fieldName].push(entity[fieldName]);
-            }
-        });
-        return values;
-    }, {});
+const applyReduce = (collection, reducerFn) =>
+    Array.isArray(collection)
+        ? collection.reduce(reducerFn, {})
+        : objectReduce(collection);
+
+const reduceEntities = entities =>
+    applyReduce(
+        entities,
+        (values = {}, entity) => {
+            Object.keys(entity).forEach(fieldName => {
+                if (!values[fieldName]) {
+                    values[fieldName] = [];
+                }
+                if (entity[fieldName] != null) {
+                    values[fieldName].push(entity[fieldName]);
+                }
+            });
+            return values;
+        },
+        {}
+    );
+
+const objectReduce = entity => {
+    const values = {};
+    Object.keys(entity).forEach(fieldName => {
+        if (!values[fieldName]) {
+            values[fieldName] = [];
+        }
+        if (entity[fieldName] != null) {
+            values[fieldName].push(entity[fieldName]);
+        }
+    });
+
+    return values;
+};
+
+export default entities => reduceEntities(entities);
