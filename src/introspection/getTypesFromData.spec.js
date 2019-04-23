@@ -4,9 +4,10 @@ import {
     GraphQLID,
     GraphQLInt,
     GraphQLNonNull,
+    GraphQLBoolean,
 } from 'graphql';
 import getTypesFromData from './getTypesFromData';
-test('Integration test', () => {
+test.only('Integration test', () => {
     const data = {
         posts: [
             {
@@ -26,15 +27,19 @@ test('Integration test', () => {
             {
                 id: 123,
                 name: 'John Doe',
+                isFlaggable: true,
             },
             {
                 id: 456,
                 name: 'Jane Doe',
+                isFlaggable: false,
             },
         ],
         currentUser: {
             id: 123,
             name: 'Jay',
+            isFlag: true,
+            count: 44,
         },
     };
     const PostType = new GraphQLObjectType({
@@ -51,6 +56,7 @@ test('Integration test', () => {
         fields: {
             id: { type: new GraphQLNonNull(GraphQLID) },
             name: { type: new GraphQLNonNull(GraphQLString) },
+            isFlaggable: { type: new GraphQLNonNull(GraphQLBoolean) },
         },
     });
 
@@ -59,6 +65,8 @@ test('Integration test', () => {
         fields: {
             id: { type: new GraphQLNonNull(GraphQLID) },
             name: { type: GraphQLString },
+            isFlag: { type: new GraphQLNonNull(GraphQLBoolean) },
+            count: { type: new GraphQLNonNull(GraphQLInt) },
         },
     });
 

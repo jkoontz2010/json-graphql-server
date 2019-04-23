@@ -33,6 +33,10 @@ export default (name, values = [], isRequired = false) => {
     if (name === 'id' || name.substr(name.length - 3) === '_id') {
         return requiredTypeOrNormal(GraphQLID, isRequired);
     }
+
+    // this unfortunate hack allows object-only mock data like currentUser to be typed by the same process as array-based mock data
+    if (!Array.isArray(values)) values = [values];
+
     if (Array.isArray(values) && values.length > 0) {
         if (valuesAreArray(values)) {
             const leafValues = values.reduce((agg, arr) => {
@@ -90,5 +94,7 @@ export default (name, values = [], isRequired = false) => {
             return requiredTypeOrNormal(GraphQLJSON, isRequired);
         }
     }
+
+    // this return caused every mock object (!array) to be returned as a string
     return requiredTypeOrNormal(GraphQLString, isRequired); // FIXME introspect further
 };
