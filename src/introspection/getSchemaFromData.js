@@ -11,9 +11,9 @@ import {
     extendSchema,
 } from 'graphql';
 import { pluralize, camelize } from 'inflection';
-
 import getTypesFromData from './getTypesFromData';
 import getFilterTypesFromData from './getFilterTypesFromData';
+import getInputObjectTypesFromData from './getInputObjectTypesFromData';
 import { isRelationshipField } from '../relationships';
 import { getRelatedType } from '../nameConverter';
 
@@ -126,26 +126,21 @@ export default data => {
     const mutationType = new GraphQLObjectType({
         name: 'Mutation',
         fields: types.reduce((fields, type) => {
-            const typeFields = typesByName[type.name].getFields();
-            const nullableTypeFields = Object.keys(
-                typeFields
-            ).reduce((f, fieldName) => {
-                f[fieldName] = Object.assign({}, typeFields[fieldName], {
-                    type:
-                        fieldName !== 'id' &&
-                        typeFields[fieldName].type instanceof GraphQLNonNull
-                            ? typeFields[fieldName].type.ofType
-                            : typeFields[fieldName].type,
-                });
-                return f;
-            }, {});
+            const inputObjectTypesByName = getInputObjectTypesFromData(data);
+
             fields[`create${camelize(type.name)}`] = {
                 type: typesByName[type.name],
-                args: typeFields,
+                args: {
+                    id: { type: new GraphQLNonNull(GraphQLID) },
+                    attributes: { type: inputObjectTypesByName[type.name] },
+                },
             };
             fields[`update${camelize(type.name)}`] = {
                 type: typesByName[type.name],
-                args: nullableTypeFields,
+                args: {
+                    id: { type: new GraphQLNonNull(GraphQLID) },
+                    attributes: { type: inputObjectTypesByName[type.name] },
+                },
             };
             fields[`remove${camelize(type.name)}`] = {
                 type: GraphQLBoolean,
