@@ -56,6 +56,19 @@ const UserType = new GraphQLObjectType({
     }),
 });
 
+const PostPayloadType = new GraphQLObjectType({
+    name: 'postPayload',
+    fields: {
+        post: { type: PostType },
+    },
+});
+const UserPayloadType = new GraphQLObjectType({
+    name: 'userPayload',
+    fields: {
+        user: { type: UserType },
+    },
+});
+
 /*
 const ListMetadataType = new GraphQLObjectType({
     name: 'ListMetadata',
@@ -174,7 +187,7 @@ test('creates three query fields per data type', () => {
 
 test('creates three mutation fields per data type', () => {
     const mutations = getSchemaFromData(data).getMutationType().getFields();
-    expect(mutations['createPost'].type.name).toEqual(PostType.name);
+    expect(mutations['createPost'].type.name).toEqual(PostPayloadType.name);
     expect(mutations['createPost'].args[0].name).toEqual('id');
     expect(mutations['createPost'].args[0].type).toEqual(
         new GraphQLNonNull(GraphQLID)
@@ -184,7 +197,7 @@ test('creates three mutation fields per data type', () => {
         'postInput'
     );
 
-    expect(mutations['updatePost'].type.name).toEqual(PostType.name);
+    expect(mutations['updatePost'].type.name).toEqual(PostPayloadType.name);
     expect(mutations['updatePost'].args[0].name).toEqual('id');
     expect(mutations['updatePost'].args[0].type).toEqual(
         new GraphQLNonNull(GraphQLID)
@@ -203,7 +216,7 @@ test('creates three mutation fields per data type', () => {
             description: null,
         },
     ]);
-    expect(mutations['createUser'].type.name).toEqual(UserType.name);
+    expect(mutations['createUser'].type.name).toEqual(UserPayloadType.name);
     expect(mutations['createUser'].args[0].name).toEqual('id');
     expect(mutations['createUser'].args[0].type).toEqual(
         new GraphQLNonNull(GraphQLID)
@@ -213,7 +226,7 @@ test('creates three mutation fields per data type', () => {
         'userInput'
     );
 
-    expect(mutations['updateUser'].type.name).toEqual(UserType.name);
+    expect(mutations['updateUser'].type.name).toEqual(UserPayloadType.name);
     expect(mutations['updateUser'].args[0].name).toEqual('id');
     expect(mutations['updateUser'].args[0].type).toEqual(
         new GraphQLNonNull(GraphQLID)

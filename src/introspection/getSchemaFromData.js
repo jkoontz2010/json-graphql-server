@@ -14,6 +14,7 @@ import { pluralize, camelize } from 'inflection';
 import getTypesFromData from './getTypesFromData';
 import getFilterTypesFromData from './getFilterTypesFromData';
 import getInputObjectTypesFromData from './getInputObjectTypesFromData';
+import getOutputTypesFromDataTypes from './getOutputTypesFromDataTypes';
 import { isRelationshipField } from '../relationships';
 import { getRelatedType } from '../nameConverter';
 
@@ -76,12 +77,17 @@ import { getRelatedType } from '../nameConverter';
  * //     removeUser(id: ID!): Boolean
  * // }
  */
+
+const typesByNameReducer = (types, type) => {
+    types[type.name] = type;
+    return types;
+};
+
 export default data => {
     const types = getTypesFromData(data);
-    const typesByName = types.reduce((types, type) => {
-        types[type.name] = type;
-        return types;
-    }, {});
+    const outputTypes = getOutputTypesFromDataTypes(types);
+    const typesByName = types.reduce(typesByNameReducer, {});
+    const outputTypesByName = outputTypes.reduce(typesByNameReducer, {});
 
     const filterTypesByName = getFilterTypesFromData(data);
 
@@ -129,14 +135,14 @@ export default data => {
             const inputObjectTypesByName = getInputObjectTypesFromData(data);
 
             fields[`create${camelize(type.name)}`] = {
-                type: typesByName[type.name],
+                type: outputTypesByName[type.name + 'Payload'],
                 args: {
                     id: { type: new GraphQLNonNull(GraphQLID) },
                     attributes: { type: inputObjectTypesByName[type.name] },
                 },
             };
             fields[`update${camelize(type.name)}`] = {
-                type: typesByName[type.name],
+                type: outputTypesByName[type.name + 'Payload'],
                 args: {
                     id: { type: new GraphQLNonNull(GraphQLID) },
                     attributes: { type: inputObjectTypesByName[type.name] },
@@ -148,6 +154,7 @@ export default data => {
                     id: { type: new GraphQLNonNull(GraphQLID) },
                 },
             };
+
             return fields;
         }, {}),
     });
