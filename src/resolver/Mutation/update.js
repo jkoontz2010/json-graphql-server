@@ -3,6 +3,7 @@ export default (entityData = []) => (_, params) => {
     const indexOfEntity = entityData.findIndex(
         e => parseInt(e.id, 10) === parsedId
     );
+    console.log("UPDATE MUTATION", params, "DATA", entityData[indexOfEntity])
     if (indexOfEntity !== -1) {
         entityData[indexOfEntity] = Object.assign(
             {},
