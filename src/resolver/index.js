@@ -18,11 +18,16 @@ const getQueryResolvers = (entityName, data) => ({
     [entityName]: single(data),
 });
 
-const getMutationResolvers = (entityName, data) => ({
-    [`create${camelize(entityName)}`]: create(data),
-    [`update${camelize(entityName)}`]: update(data),
-    [`remove${camelize(entityName)}`]: remove(data),
-});
+const getMutationResolvers = (entityName, data) => {
+    const dataWithoutAttributes = data.attributes
+        ? Object.assign({}, { id: data.id }, data.attributes)
+        : data;
+    return {
+        [`create${camelize(entityName)}`]: create(dataWithoutAttributes),
+        [`update${camelize(entityName)}`]: update(dataWithoutAttributes),
+        [`remove${camelize(entityName)}`]: remove(dataWithoutAttributes),
+    };
+};
 
 export default data => {
     return Object.assign(
