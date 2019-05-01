@@ -1,6 +1,6 @@
 import omit from 'lodash.omit';
 
-export default (entityData = []) => (_, params) => {
+export default (entityData = [], entityName) => (_, params) => {
     const parsedId = parseInt(params.id, 10); // FIXME fails for non-integer ids
     const indexOfEntity = entityData.findIndex(
         e => parseInt(e.id, 10) === parsedId
@@ -14,6 +14,6 @@ export default (entityData = []) => (_, params) => {
             entityData[indexOfEntity],
             paramsWithoutAttributes
         );
-        return entityData[indexOfEntity];
+        return { [entityName]: entityData[indexOfEntity] };
     }
 };

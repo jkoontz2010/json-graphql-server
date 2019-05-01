@@ -19,9 +19,9 @@ const getQueryResolvers = (entityName, data) => ({
 });
 
 const getMutationResolvers = (entityName, data) => ({
-    [`create${camelize(entityName)}`]: create(data),
-    [`update${camelize(entityName)}`]: update(data),
-    [`remove${camelize(entityName)}`]: remove(data),
+    [`create${camelize(entityName)}`]: create(data, entityName),
+    [`update${camelize(entityName)}`]: update(data, entityName),
+    [`remove${camelize(entityName)}`]: remove(data, entityName),
 });
 
 export default data => {

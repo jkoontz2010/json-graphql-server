@@ -101,12 +101,13 @@ describe('integration tests', () => {
             'mutation{ updatePost(id:"2", attributes: { title:"Foo bar", views: 200, user_id:"123" }) { post {id} } }'
         ).then(() =>
             gqlAgent(
-                'mutation{ updatePost(id:"2", attributes: { title:"Foo bar", views: 200, user_id:"123" }) { post {id} } }'
+                'mutation{ updatePost(id:"2", attributes: { title:"Foo bar", views: 232, user_id:"123" }) { post {id, views} } }'
             ).expect({
                 data: {
                     updatePost: {
                         post: {
                             id: 2,
+                            views: 232,
                         },
                     },
                 },

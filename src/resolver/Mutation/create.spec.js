@@ -1,19 +1,23 @@
 import create from './create';
 
 test('returns a new object with id 0 on empty datastore', () => {
-    expect(create()(null, {})).toEqual({ id: 0 });
+    expect(create([], 'post')(null, {})).toEqual({ post: { id: 0 } });
 });
 
 test('returns a new object with incremental id', () => {
     const data = [{ id: 1 }, { id: 3 }];
-    expect(create(data)(null, {})).toEqual({ id: 4 });
+    expect(create(data, 'post')(null, {})).toEqual({
+        post: { id: 4 },
+    });
 });
 
 test('returns a new object using create data', () => {
     const data = [{ id: 0, value: 'foo' }];
-    expect(create(data)(null, { value: 'toto' })).toEqual({
-        id: 1,
-        value: 'toto',
+    expect(create(data, 'post')(null, { value: 'toto' })).toEqual({
+        post: {
+            id: 1,
+            value: 'toto',
+        },
     });
 });
 
