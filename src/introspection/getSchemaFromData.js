@@ -137,7 +137,6 @@ export default data => {
             fields[`create${camelize(type.name)}`] = {
                 type: outputTypesByName[type.name + 'Payload'],
                 args: {
-                    id: { type: new GraphQLNonNull(GraphQLID) },
                     attributes: { type: inputObjectTypesByName[type.name] },
                 },
             };
