@@ -6,7 +6,7 @@ export default (entityData = [], entityName) => (_, entity) => {
         : entity;
     const newId =
         entityData.length > 0 ? entityData[entityData.length - 1].id + 1 : 0;
-    const newEntity = Object.assign({ id: newId }, entityWithoutAttributes);
+    const newEntity = Object.assign(entityWithoutAttributes, { id: newId });
 
     entityData.push(newEntity);
     return { [entityName]: newEntity };
