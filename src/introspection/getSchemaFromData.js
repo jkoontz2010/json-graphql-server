@@ -71,10 +71,10 @@ import { getRelatedType } from '../nameConverter';
  * // type Mutation {
  * //     createPost(data: String): Post
  * //     updatePost(data: String): Post
- * //     removePost(id: ID!): Boolean
+ * //     deletePost(id: ID!): Boolean
  * //     createUser(data: String): User
  * //     updateUser(data: String): User
- * //     removeUser(id: ID!): Boolean
+ * //     deleteUser(id: ID!): Boolean
  * // }
  */
 
@@ -147,7 +147,7 @@ export default data => {
                     attributes: { type: inputObjectTypesByName[type.name] },
                 },
             };
-            fields[`remove${camelize(type.name)}`] = {
+            fields[`delete${camelize(type.name)}`] = {
                 type: GraphQLBoolean,
                 args: {
                     id: { type: new GraphQLNonNull(GraphQLID) },

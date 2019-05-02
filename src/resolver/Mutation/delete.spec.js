@@ -1,29 +1,32 @@
-import remove from './remove';
+import deleteMutation from './delete';
 
 test('returns undefined by default', () => {
-    expect(remove()(null, {})).toBeUndefined();
+    expect(deleteMutation()(null, {})).toBeUndefined();
 });
 
-test('returns removed record when found', () => {
+test('returns deleteMutationd record when found', () => {
     const data = [{ id: 1, value: 'foo' }, { id: 2, value: 'bar' }];
-    expect(remove(data)(null, { id: 1 })).toEqual({ id: 1, value: 'foo' });
+    expect(deleteMutation(data)(null, { id: 1 })).toEqual({
+        id: 1,
+        value: 'foo',
+    });
     expect(data).toEqual([{ id: 2, value: 'bar' }]);
 });
 
 test('returns undefined when not found', () => {
     const data = [{ id: 1, value: 'foo' }, { id: 2, value: 'bar' }];
-    expect(remove(data)(null, { id: 3 })).toBeUndefined();
+    expect(deleteMutation(data)(null, { id: 3 })).toBeUndefined();
 });
 
 test('leaves data unmodified when not found', () => {
     const data = [{ id: 1, value: 'foo' }, { id: 2, value: 'bar' }];
     const originalData = [...data];
-    expect(remove(data)(null, { id: 3 })).toBeUndefined();
+    expect(deleteMutation(data)(null, { id: 3 })).toBeUndefined();
     expect(data).toEqual(originalData);
 });
 
-test('removes record when found', () => {
+test('deleteMutations record when found', () => {
     const data = [{ id: 1, value: 'foo' }, { id: 2, value: 'bar' }];
-    remove(data)(null, { id: 1 });
+    deleteMutation(data)(null, { id: 1 });
     expect(data).toEqual([{ id: 2, value: 'bar' }]);
 });

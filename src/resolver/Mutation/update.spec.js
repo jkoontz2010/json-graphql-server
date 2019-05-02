@@ -26,7 +26,7 @@ test('updates record when found', () => {
     expect(data).toEqual([{ id: 1, value: 'bar', bar: 'baz' }]);
 });
 
-test('removes property when setting the value to undefined', () => {
+test('deletes property when setting the value to undefined', () => {
     const data = [{ id: 1, value: 'foo' }];
     update(data, 'post')(null, { id: 1, value: undefined });
     expect(data).toEqual([{ id: 1 }]);

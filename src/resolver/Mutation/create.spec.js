@@ -7,7 +7,7 @@ test('returns a new object with id 0 on empty datastore', () => {
 test('returns a new object with incremental id', () => {
     const data = [{ id: 0 }, { id: 1 }];
     expect(create(data, 'post')(null, {})).toEqual({
-        post: { id: 2 },
+        post: { id: 3 },
     });
 });
 
@@ -24,5 +24,5 @@ test('returns a new object using create data', () => {
 test('creates a new record', () => {
     const data = [{ id: 1 }, { id: 2 }];
     create(data)(null, { value: 'foo' });
-    expect(data).toEqual([{ id: 1 }, { id: 2 }, { id: 3, value: 'foo' }]);
+    expect(data).toEqual([{ id: 1 }, { id: 2 }, { id: 4, value: 'foo' }]);
 });

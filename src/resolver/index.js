@@ -6,7 +6,7 @@ import meta from './Query/meta';
 import single from './Query/single';
 import create from './Mutation/create';
 import update from './Mutation/update';
-import remove from './Mutation/remove';
+import deleteMutation from './Mutation/delete';
 import entityResolver from './Entity';
 import { getTypeFromKey } from '../nameConverter';
 import DateType from '../introspection/DateType';
@@ -21,7 +21,7 @@ const getQueryResolvers = (entityName, data) => ({
 const getMutationResolvers = (entityName, data) => ({
     [`create${camelize(entityName)}`]: create(data, entityName),
     [`update${camelize(entityName)}`]: update(data, entityName),
-    [`remove${camelize(entityName)}`]: remove(data, entityName),
+    [`delete${camelize(entityName)}`]: deleteMutation(data, entityName),
 });
 
 export default data => {
