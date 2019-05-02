@@ -188,12 +188,8 @@ test('creates three query fields per data type', () => {
 test('creates three mutation fields per data type', () => {
     const mutations = getSchemaFromData(data).getMutationType().getFields();
     expect(mutations['createPost'].type.name).toEqual(PostPayloadType.name);
-    expect(mutations['createPost'].args[0].name).toEqual('id');
-    expect(mutations['createPost'].args[0].type).toEqual(
-        new GraphQLNonNull(GraphQLID)
-    );
-    expect(mutations['createPost'].args[1].name).toEqual('attributes');
-    expect(mutations['createPost'].args[1].type.toString()).toEqual(
+    expect(mutations['createPost'].args[0].name).toEqual('attributes');
+    expect(mutations['createPost'].args[0].type.toString()).toEqual(
         'postInput'
     );
 
@@ -217,12 +213,8 @@ test('creates three mutation fields per data type', () => {
         },
     ]);
     expect(mutations['createUser'].type.name).toEqual(UserPayloadType.name);
-    expect(mutations['createUser'].args[0].name).toEqual('id');
-    expect(mutations['createUser'].args[0].type).toEqual(
-        new GraphQLNonNull(GraphQLID)
-    );
-    expect(mutations['createUser'].args[1].name).toEqual('attributes');
-    expect(mutations['createUser'].args[1].type.toString()).toEqual(
+    expect(mutations['createUser'].args[0].name).toEqual('attributes');
+    expect(mutations['createUser'].args[0].type.toString()).toEqual(
         'userInput'
     );
 
