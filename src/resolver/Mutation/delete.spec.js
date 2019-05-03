@@ -6,27 +6,29 @@ test('returns undefined by default', () => {
 
 test('returns deleteMutationd record when found', () => {
     const data = [{ id: 1, value: 'foo' }, { id: 2, value: 'bar' }];
-    expect(deleteMutation(data)(null, { id: 1 })).toEqual({
-        id: 1,
-        value: 'foo',
+    expect(deleteMutation(data, 'post')(null, { id: 1 })).toEqual({
+        post: {
+            id: 1,
+            value: 'foo',
+        },
     });
     expect(data).toEqual([{ id: 2, value: 'bar' }]);
 });
 
 test('returns undefined when not found', () => {
     const data = [{ id: 1, value: 'foo' }, { id: 2, value: 'bar' }];
-    expect(deleteMutation(data)(null, { id: 3 })).toBeUndefined();
+    expect(deleteMutation(data, 'post')(null, { id: 3 })).toBeUndefined();
 });
 
 test('leaves data unmodified when not found', () => {
     const data = [{ id: 1, value: 'foo' }, { id: 2, value: 'bar' }];
     const originalData = [...data];
-    expect(deleteMutation(data)(null, { id: 3 })).toBeUndefined();
+    expect(deleteMutation(data, 'post')(null, { id: 3 })).toBeUndefined();
     expect(data).toEqual(originalData);
 });
 
 test('deleteMutations record when found', () => {
     const data = [{ id: 1, value: 'foo' }, { id: 2, value: 'bar' }];
-    deleteMutation(data)(null, { id: 1 });
+    deleteMutation(data, 'post')(null, { id: 1 });
     expect(data).toEqual([{ id: 2, value: 'bar' }]);
 });
