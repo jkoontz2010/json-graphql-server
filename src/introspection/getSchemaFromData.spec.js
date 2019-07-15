@@ -91,8 +91,7 @@ const QueryType = new GraphQLObjectType({
             args: {
                 page: { type: GraphQLInt },
                 perPage: { type: GraphQLInt },
-                sortField: { type: GraphQLString },
-                sortOrder: { type: GraphQLString },
+                sort: { type: GraphQLString },
                 filter: { type: GraphQLString },
             },
         },
@@ -107,8 +106,7 @@ const QueryType = new GraphQLObjectType({
             args: {
                 page: { type: GraphQLInt },
                 perPage: { type: GraphQLInt },
-                sortField: { type: GraphQLString },
-                sortOrder: { type: GraphQLString },
+                sort: { type: GraphQLString },
                 filter: { type: GraphQLString },
             },
         },
@@ -154,12 +152,10 @@ test('creates three query fields per data type', () => {
     expect(queries['allPosts'].args[0].type).toEqual(GraphQLInt);
     expect(queries['allPosts'].args[1].name).toEqual('perPage');
     expect(queries['allPosts'].args[1].type).toEqual(GraphQLInt);
-    expect(queries['allPosts'].args[2].name).toEqual('sortField');
-    expect(queries['allPosts'].args[2].type).toEqual(GraphQLString);
-    expect(queries['allPosts'].args[3].name).toEqual('sortOrder');
-    expect(queries['allPosts'].args[3].type).toEqual(GraphQLString);
-    expect(queries['allPosts'].args[4].name).toEqual('filter');
-    expect(queries['allPosts'].args[4].type.toString()).toEqual('postFilter');
+    expect(queries['allPosts'].args[2].name).toEqual('sort');
+    expect(queries['allPosts'].args[2].type.toString()).toEqual('postSort');
+    expect(queries['allPosts'].args[3].name).toEqual('filter');
+    expect(queries['allPosts'].args[3].type.toString()).toEqual('postFilter');
     expect(queries['_allPostsMeta'].type.toString()).toEqual('ListMetadata');
 
     expect(queries['user'].type.name).toEqual(UserType.name);
@@ -176,12 +172,10 @@ test('creates three query fields per data type', () => {
     expect(queries['allUsers'].args[0].type).toEqual(GraphQLInt);
     expect(queries['allUsers'].args[1].name).toEqual('perPage');
     expect(queries['allUsers'].args[1].type).toEqual(GraphQLInt);
-    expect(queries['allUsers'].args[2].name).toEqual('sortField');
-    expect(queries['allUsers'].args[2].type).toEqual(GraphQLString);
-    expect(queries['allUsers'].args[3].name).toEqual('sortOrder');
-    expect(queries['allUsers'].args[3].type).toEqual(GraphQLString);
-    expect(queries['allUsers'].args[4].name).toEqual('filter');
-    expect(queries['allUsers'].args[4].type.toString()).toEqual('userFilter');
+    expect(queries['allUsers'].args[2].name).toEqual('sort');
+    expect(queries['allUsers'].args[2].type.toString()).toEqual('userSort');
+    expect(queries['allUsers'].args[3].name).toEqual('filter');
+    expect(queries['allUsers'].args[3].type.toString()).toEqual('userFilter');
     expect(queries['_allPostsMeta'].type.toString()).toEqual('ListMetadata');
 });
 

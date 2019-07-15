@@ -55,33 +55,37 @@ describe('pagination', () => {
     });
 });
 
-describe('sort', () => {
-    test('sorts data using sortField for the field', () => {
-        expect(all(data)(null, { sortField: 'views' })).toEqual([
+describe('sorting REMOVED', () => {
+    test('DOES NOT sort data using sortField for the field', () => {
+        expect(
+            all(data)(null, { sort: { field: 'views', order: 'asc' } })
+        ).toEqual([
+            { id: 1, title: 'Lorem Ipsum', user_id: 123, views: 254 },
             { id: 2, title: 'Ut enim ad minim', user_id: 456, views: 65 },
             { id: 3, title: 'Sic Dolor amet', user_id: 123, views: 76 },
-            { id: 1, title: 'Lorem Ipsum', user_id: 123, views: 254 },
         ]);
-        expect(all(data)(null, { sortField: 'title' })).toEqual([
+        expect(
+            all(data)(null, { sort: { field: 'views', order: 'asc' } })
+        ).toEqual([
             { id: 1, title: 'Lorem Ipsum', user_id: 123, views: 254 },
-            { id: 3, title: 'Sic Dolor amet', user_id: 123, views: 76 },
             { id: 2, title: 'Ut enim ad minim', user_id: 456, views: 65 },
+            { id: 3, title: 'Sic Dolor amet', user_id: 123, views: 76 },
         ]);
     });
-    test('sorts data using sortOrder for the sort direction', () => {
+    test('DOES NOT sort data using sortOrder for the sort direction', () => {
         expect(
-            all(data)(null, { sortField: 'views', sortOrder: 'asc' })
+            all(data)(null, { sort: { field: 'views', order: 'asc' } })
         ).toEqual([
+            { id: 1, title: 'Lorem Ipsum', user_id: 123, views: 254 },
             { id: 2, title: 'Ut enim ad minim', user_id: 456, views: 65 },
             { id: 3, title: 'Sic Dolor amet', user_id: 123, views: 76 },
-            { id: 1, title: 'Lorem Ipsum', user_id: 123, views: 254 },
         ]);
         expect(
-            all(data)(null, { sortField: 'views', sortOrder: 'desc' })
+            all(data)(null, { sort: { field: 'views', order: 'asc' } })
         ).toEqual([
             { id: 1, title: 'Lorem Ipsum', user_id: 123, views: 254 },
-            { id: 3, title: 'Sic Dolor amet', user_id: 123, views: 76 },
             { id: 2, title: 'Ut enim ad minim', user_id: 456, views: 65 },
+            { id: 3, title: 'Sic Dolor amet', user_id: 123, views: 76 },
         ]);
     });
 });

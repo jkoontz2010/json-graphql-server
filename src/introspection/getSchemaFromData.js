@@ -6,13 +6,13 @@ import {
     GraphQLNonNull,
     GraphQLObjectType,
     GraphQLSchema,
-    GraphQLString,
     parse,
     extendSchema,
 } from 'graphql';
 import { pluralize, camelize } from 'inflection';
 import getTypesFromData from './getTypesFromData';
 import getFilterTypesFromData from './getFilterTypesFromData';
+import getSortTypesFromData from './getSortTypesFromData';
 import getInputObjectTypesFromData from './getInputObjectTypesFromData';
 import getOutputTypesFromDataTypes from './getOutputTypesFromDataTypes';
 import { isRelationshipField } from '../relationships';
@@ -90,6 +90,7 @@ export default data => {
     const outputTypesByName = outputTypes.reduce(typesByNameReducer, {});
 
     const filterTypesByName = getFilterTypesFromData(data);
+    const sortTypesByName = getSortTypesFromData(data);
 
     const listMetadataType = new GraphQLObjectType({
         name: 'ListMetadata',
@@ -112,8 +113,7 @@ export default data => {
                 args: {
                     page: { type: GraphQLInt },
                     perPage: { type: GraphQLInt },
-                    sortField: { type: GraphQLString },
-                    sortOrder: { type: GraphQLString },
+                    sort: { type: sortTypesByName[type.name] },
                     filter: { type: filterTypesByName[type.name] },
                 },
             };
@@ -122,6 +122,7 @@ export default data => {
                 args: {
                     page: { type: GraphQLInt },
                     perPage: { type: GraphQLInt },
+                    sort: { type: sortTypesByName[type.name] },
                     filter: { type: filterTypesByName[type.name] },
                 },
             };

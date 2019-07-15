@@ -2,10 +2,10 @@ import applyFilters from './applyFilters';
 
 export default (entityData = []) => (
     _,
-    { sortField, sortOrder = 'asc', page, perPage = 25, filter = {} }
+    { page, perPage = 25, filter = {} }
 ) => {
     let items = [...entityData];
-
+    /* !!! removing sort. works differently from BE, just not going to mock it now
     if (sortField) {
         const direction = sortOrder.toLowerCase() == 'asc' ? 1 : -1;
         items = items.sort((a, b) => {
@@ -18,7 +18,7 @@ export default (entityData = []) => (
             return 0;
         });
     }
-
+*/
     items = applyFilters(items, filter);
 
     if (page !== undefined && perPage) {

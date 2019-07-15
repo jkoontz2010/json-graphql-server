@@ -59,19 +59,19 @@ test('all* route supports pagination', () =>
             },
         })
     ));
-test('all* route supports sorting', () =>
+test('all* route ***IGNORES*** sorting', () =>
     graphql(
         schema,
-        '{ allPosts(sortField: "views", sortOrder: "desc") { id } }'
+        '{ allPosts(sort: { order: "desc", field: "id"} ) { id } }'
     ).then(result =>
         expect(result).toEqual({
             data: {
-                allPosts: [{ id: '1' }, { id: '3' }, { id: '2' }],
+                allPosts: [{ id: '1' }, { id: '2' }, { id: '3' }],
             },
         })
     ));
-test('all* route supports filtering', () =>
-    graphql(schema, '{ allPosts(filter: { q: "lorem"}) { id } }').then(result =>
+test('all* route handles filtering', () =>
+    graphql(schema, '{ allPosts(filter: { id: 1 }) { id } }').then(result =>
         expect(result).toEqual({
             data: {
                 allPosts: [{ id: '1' }],
