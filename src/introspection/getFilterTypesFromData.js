@@ -102,6 +102,21 @@ export default data =>
                         {
                             ids: { type: new GraphQLList(GraphQLID) },
                         },
+                        {
+                            search: {
+                                type: new GraphQLInputObjectType({
+                                    name: `${getTypeFromKey(key)}FilterSearch`,
+                                    fields: {
+                                        fields: {
+                                            type: new GraphQLList(
+                                                GraphQLString
+                                            ),
+                                        },
+                                        queryString: { type: GraphQLString },
+                                    },
+                                }),
+                            },
+                        },
                         getFieldsFromEntities(data[key], false),
                         getRangeFiltersFromEntities(data[key])
                     ),

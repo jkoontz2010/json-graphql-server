@@ -1,9 +1,4 @@
-import applyFilters from './applyFilters';
-
-export default (entityData = []) => (
-    _,
-    { page, perPage = 25, filter = {} }
-) => {
+export default (entityData = []) => (_, { page, perPage = 25 }) => {
     let items = [...entityData];
     /* !!! removing sort. works differently from BE, just not going to mock it now
     if (sortField) {
@@ -19,7 +14,8 @@ export default (entityData = []) => (
         });
     }
 */
-    items = applyFilters(items, filter);
+    // REMOVING FILTERING so we can allow for the search param inside the query
+    // items = applyFilters(items, filter);
 
     if (page !== undefined && perPage) {
         items = items.slice(page * perPage, page * perPage + perPage);

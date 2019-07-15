@@ -52,10 +52,12 @@ describe('integration tests', () => {
                 allPosts: [{ id: '1' }, { id: '2' }, { id: '3' }],
             },
         }));
-    it('filters by string using the q filter in a case-insensitive way', () =>
-        gqlAgent('{ allPosts(filter: { q: "lorem" }) { id } }').expect({
+    it('filters must take the right arguments, but doesnt actually filter anything', () =>
+        gqlAgent(
+            '{ allPosts(filter: { search: { fields: ["lorem", "ipsum"], queryString: "doesntmatter" } }) { id } }'
+        ).expect({
             data: {
-                allPosts: [{ id: '1' }],
+                allPosts: [{ id: '1' }, { id: '2' }, { id: '3' }],
             },
         }));
     it('gets an entity by id', () =>

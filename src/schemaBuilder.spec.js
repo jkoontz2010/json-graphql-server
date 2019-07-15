@@ -74,7 +74,7 @@ test('all* route handles filtering', () =>
     graphql(schema, '{ allPosts(filter: { id: 1 }) { id } }').then(result =>
         expect(result).toEqual({
             data: {
-                allPosts: [{ id: '1' }],
+                allPosts: [{ id: '1' }, { id: '2' }, { id: '3' }],
             },
         })
     ));
